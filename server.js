@@ -502,7 +502,15 @@ app.get('/', (request, response) => {
     response.sendFile(__dirname + '/index.html')
 })
 
-app.get('/api/:name', (request, response) => {
+app.get('/api/albums/', (request, response) => {
+    if(albums){
+        response.json(albums)
+    }else{
+        response.json(albums["unknown"])
+    }
+})
+
+app.get('/api/albums/:name', (request, response) => {
     const albumName = request.params.name.toLowerCase()
     if(albums[albumName]){
         response.json(albums[albumName])
@@ -510,6 +518,9 @@ app.get('/api/:name', (request, response) => {
         response.json(albums["unknown"])
     }
 })
+
+
+
 
 app.listen(process.env.PORT || PORT, () => {
     console.log(`Server running on port ${PORT}`)
